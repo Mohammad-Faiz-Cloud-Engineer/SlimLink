@@ -9,7 +9,6 @@ const router = Router();
 router.get('/', (req, res) => {
   res.render('index', {
     title: 'SlimLink',
-    baseUrl: config.baseUrl,
     shortUrl: null,
     error: null
   });
@@ -19,7 +18,6 @@ router.post('/', validateUrlForm, (req, res) => {
   if (req.urlError) {
     return res.render('index', {
       title: 'SlimLink',
-      baseUrl: config.baseUrl,
       shortUrl: null,
       error: req.urlError
     });
@@ -31,14 +29,12 @@ router.post('/', validateUrlForm, (req, res) => {
     const shortUrl = config.baseUrl + '/' + shortCode;
     res.render('index', {
       title: 'SlimLink',
-      baseUrl: config.baseUrl,
       shortUrl,
       error: null
     });
   } catch (err) {
     res.render('index', {
       title: 'SlimLink',
-      baseUrl: config.baseUrl,
       shortUrl: null,
       error: err.message
     });
