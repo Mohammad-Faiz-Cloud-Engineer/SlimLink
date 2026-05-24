@@ -1,6 +1,6 @@
 const geoip = require('geoip-lite');
 const UAParser = require('ua-parser-js');
-const http = require('http');
+const https = require('https');
 
 function getClientIP(req) {
   const forwarded = req.headers['x-forwarded-for'];
@@ -43,9 +43,9 @@ function isPrivateIP(ip) {
 
 function lookupISP(ip) {
   return new Promise(function(resolve) {
-    var url = 'http://ip-api.com/json/' + ip + '?fields=isp,org,as';
-    http.get(url, function(res) {
-      var data = '';
+    let url = 'https://ip-api.com/json/' + encodeURIComponent(ip) + '?fields=isp,org,as';
+    https.get(url, function(res) {
+      let data = '';
       res.on('data', function(c) { data += c; });
       res.on('end', function() {
         try { resolve(JSON.parse(data).isp || null); }

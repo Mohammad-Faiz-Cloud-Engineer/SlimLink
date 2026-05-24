@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
-const { apiLimiter } = require('./middleware/rateLimit');
+const { apiLimiter, redirectLimiter } = require('./middleware/rateLimit');
 
 const landingRoutes = require('./routes/landing');
 const redirectRoutes = require('./routes/redirect');
@@ -41,7 +41,7 @@ app.use(express.json());
 app.use('/api', apiLimiter, apiRoutes);
 app.use('/admin', adminRoutes);
 app.use('/', landingRoutes);
-app.use('/', redirectRoutes);
+app.use('/', redirectLimiter, redirectRoutes);
 
 app.use((req, res) => {
   res.status(404).render('404', { title: 'Not Found' });

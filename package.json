@@ -1,8 +1,8 @@
-{
+﻿{
   "name": "slimlink",
   "version": "1.0.0",
   "private": true,
-  "description": "SlimLink — secure URL shortener with admin panel and click analytics",
+  "description": "SlimLink - secure URL shortener with admin panel and click analytics",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",

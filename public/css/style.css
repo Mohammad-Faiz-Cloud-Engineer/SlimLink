@@ -389,13 +389,6 @@ tbody tr:hover {
   white-space: nowrap;
 }
 
-.ua-cell {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .time-cell {
   white-space: nowrap;
   color: var(--text-secondary);

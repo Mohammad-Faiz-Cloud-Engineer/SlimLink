@@ -25,7 +25,7 @@ router.get('/:code', function(req, res) {
 
   try {
     db.incrementClickCount(link.id);
-    var clickId = db.recordClick(
+    let clickId = db.recordClick(
       link.id, ip, userAgent, referrer, country,
       device.browser, device.os, device.deviceType,
       device.deviceVendor, device.deviceModel
@@ -36,7 +36,7 @@ router.get('/:code', function(req, res) {
     if (ip && !tracker.isPrivateIP(ip)) {
       tracker.lookupISP(ip).then(function(isp) {
         if (isp) db.updateClickISP(clickId, isp);
-      }).catch(function() {});
+      }).catch(function(err) { console.error('ISP lookup failed:', err.message); });
     }
   } catch (err) {
     console.error('Click tracking error:', err.message);
