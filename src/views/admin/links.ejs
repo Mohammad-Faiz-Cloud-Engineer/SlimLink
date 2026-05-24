@@ -1,0 +1,69 @@
+<%- include('../includes/head') %>
+  <div class="admin-layout">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h2>SlimLink</h2>
+        <span class="badge">Admin</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/admin">Dashboard</a></li>
+        <li><a href="/admin/links" class="active">Links</a></li>
+      </ul>
+    </nav>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1>Manage Links</h1>
+      </header>
+
+      <section class="section">
+        <form method="POST" action="/admin/links" class="shorten-form inline-form">
+          <input type="url" name="url" placeholder="https://example.com/long-url" required>
+          <button type="submit" class="btn btn-primary">Create Link</button>
+        </form>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <p class="error-msg"><%= error %></p>
+        <% } %>
+        <% if (typeof success !== 'undefined' && success) { %>
+          <p class="success-msg"><%= success %></p>
+        <% } %>
+      </section>
+
+      <section class="section">
+        <% if (links.length === 0) { %>
+          <p class="empty-state">No links yet. Create one above.</p>
+        <% } else { %>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Short URL</th>
+                  <th>Original URL</th>
+                  <th>Clicks</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% links.forEach(function(link) { %>
+                  <tr>
+                    <td><a href="<%= baseUrl %>/<%= link.short_code %>" target="_blank" rel="noopener"><code><%= link.short_code %></code></a></td>
+                    <td class="url-cell"><%= link.original_url %></td>
+                    <td><%= link.clicks %></td>
+                    <td class="time-cell"><%= fmtDate(link.created_at) %></td>
+                    <td class="actions-cell">
+                      <a href="/admin/links/<%= link.id %>" class="btn btn-sm">View</a>
+                      <form method="POST" action="/admin/links/<%= link.id %>/delete" class="inline-form" onsubmit="return confirm('Delete this link? This action cannot be undone.')">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </section>
+    </main>
+  </div>
+<%- include('../includes/foot') %>

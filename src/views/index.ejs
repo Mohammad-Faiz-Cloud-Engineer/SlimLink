@@ -1,0 +1,44 @@
+<%- include('includes/head') %>
+  <div class="landing">
+    <div class="hero">
+      <h1>SlimLink</h1>
+      <p class="subtitle">Shorten your URLs in seconds. Free, fast, and open source.</p>
+
+      <form method="POST" action="/" class="shorten-form">
+        <div class="input-group">
+          <input type="url" name="url" placeholder="https://example.com/your-long-url" required autofocus>
+          <button type="submit" class="btn btn-primary">Shorten</button>
+        </div>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <p class="error-msg"><%= error %></p>
+        <% } %>
+      </form>
+
+      <% if (typeof shortUrl !== 'undefined' && shortUrl) { %>
+        <div class="result">
+          <p class="result-label">Your shortened URL:</p>
+          <div class="result-url">
+            <input type="text" value="<%= shortUrl %>" id="shortUrl" readonly>
+            <button class="btn btn-secondary" onclick="copyUrl()">Copy</button>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="footer-links">
+      <a href="/admin">Admin Panel</a>
+      <a href="https://github.com">GitHub</a>
+    </div>
+  </div>
+
+  <script>
+    function copyUrl() {
+      const input = document.getElementById('shortUrl');
+      input.select();
+      document.execCommand('copy');
+      const btn = input.nextElementSibling;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+    }
+  </script>
+<%- include('includes/foot') %>
