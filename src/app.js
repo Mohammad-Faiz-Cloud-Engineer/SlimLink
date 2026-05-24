@@ -15,14 +15,14 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.locals.fmtDate = function fmtDate(d) {
   if (!d) return '-';
-  var dt = new Date(d.replace(' ', 'T') + 'Z');
+  let dt = new Date(d.replace(' ', 'T') + 'Z');
   if (isNaN(dt.getTime())) return d;
-  var dd = String(dt.getDate()).padStart(2, '0');
-  var mm = String(dt.getMonth() + 1).padStart(2, '0');
-  var yyyy = dt.getFullYear();
-  var h = dt.getHours();
-  var m = String(dt.getMinutes()).padStart(2, '0');
-  var ampm = h >= 12 ? 'PM' : 'AM';
+  let dd = String(dt.getDate()).padStart(2, '0');
+  let mm = String(dt.getMonth() + 1).padStart(2, '0');
+  let yyyy = dt.getFullYear();
+  let h = dt.getHours();
+  let m = String(dt.getMinutes()).padStart(2, '0');
+  let ampm = h >= 12 ? 'PM' : 'AM';
   h = h % 12 || 12;
   return dd + '/' + mm + '/' + yyyy + ' ' + h + ':' + m + ' ' + ampm;
 };
