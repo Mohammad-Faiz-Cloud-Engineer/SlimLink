@@ -126,7 +126,7 @@ body {
 }
 
 a {
-  color: var(--accent);
+  color: var(--text);
   text-decoration: none;
   transition: color var(--transition);
 }
@@ -165,10 +165,7 @@ code {
   font-size: 3.2rem;
   font-weight: 800;
   margin-bottom: 0.75rem;
-  background: linear-gradient(135deg, var(--accent), #a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text);
   letter-spacing: -0.03em;
   line-height: 1.15;
 }
@@ -235,14 +232,18 @@ code {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 4px 16px var(--accent-glow);
+  background: var(--glass-bg);
+  color: var(--text);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
-  box-shadow: 0 6px 24px var(--accent-glow);
+  background: var(--glass-hover);
+  border-color: var(--text-muted);
+  box-shadow: var(--glass-shadow-lg);
   text-decoration: none;
   transform: translateY(-1px);
 }
@@ -314,7 +315,7 @@ code {
   border: 2px solid var(--accent);
   border-radius: var(--radius-md);
   background: var(--input-bg);
-  color: var(--accent);
+  color: var(--text);
   font-size: 1rem;
   outline: none;
   font-weight: 500;
@@ -418,15 +419,17 @@ code {
 }
 
 .badge {
-  background: var(--accent);
-  color: white;
+  background: var(--glass-bg);
+  color: var(--text-secondary);
   padding: 0.15rem 0.55rem;
   border-radius: var(--radius-sm);
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .sidebar-nav {
@@ -453,7 +456,7 @@ code {
 
 .sidebar-nav a.active {
   background: var(--accent-subtle);
-  color: var(--accent);
+  color: var(--text);
   border: 1px solid rgba(108, 99, 255, 0.15);
 }
 
@@ -512,7 +515,7 @@ code {
 .stat-value {
   font-size: 2.2rem;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--text);
   line-height: 1.2;
 }
 
