@@ -1,3 +1,5 @@
+require('./lib/helper.cjs');
+
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs');
