@@ -132,7 +132,7 @@ a {
 }
 
 a:hover {
-  color: var(--accent-hover);
+  color: var(--text);
   text-decoration: underline;
 }
 
@@ -312,7 +312,7 @@ code {
 .result-url input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--input-border);
   border-radius: var(--radius-md);
   background: var(--input-bg);
   color: var(--text);
@@ -455,14 +455,14 @@ code {
 }
 
 .sidebar-nav a.active {
-  background: var(--accent-subtle);
+  background: var(--sidebar-hover);
   color: var(--text);
-  border: 1px solid rgba(108, 99, 255, 0.15);
+  border: 1px solid var(--glass-border);
 }
 
 .sidebar-nav a.active:hover {
-  background: var(--accent-subtle);
-  color: var(--accent-hover);
+  background: var(--sidebar-hover);
+  color: var(--text);
 }
 
 .admin-main {

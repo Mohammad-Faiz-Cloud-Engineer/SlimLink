@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat)
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat)
 
-[![Test results](https://img.shields.io/badge/tests-%E2%9C%93%20210-brightgreen?style=flat)]()
+[![Test results](https://img.shields.io/badge/tests-210-brightgreen?style=flat)]()
 [![Code quality](https://img.shields.io/badge/code%20quality-A-brightgreen?style=flat)]()
 [![Build](https://img.shields.io/badge/build-passing-brightgreen?style=flat)]()
 [![Dead code](https://img.shields.io/badge/dead%20code-none-brightgreen?style=flat)]()

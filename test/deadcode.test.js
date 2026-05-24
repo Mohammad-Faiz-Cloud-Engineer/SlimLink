@@ -171,7 +171,7 @@ describe('Dead code: Unused require() imports', () => {
     }
 
     for (const stmt of requireStmts) {
-      it(`${path.relative(srcDir, file)}:${stmt.line} — imported names are referenced`, () => {
+      it(`${path.relative(srcDir, file)}:${stmt.line} - imported names are referenced`, () => {
         const fileContent = fs.readFileSync(file, 'utf8');
         const afterRequire = fileContent.slice(fileContent.indexOf(stmt.full) + stmt.full.length);
 
@@ -262,7 +262,7 @@ describe('Dead code: EJS render variables', () => {
         const escapedV = v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const usageRe = new RegExp(`<%=?\\s*${escapedV}[^%]*%>|<%-?\\s*include.*${escapedV}|\\b${escapedV}\\.\\w+`);
         if (!usageRe.test(allContent)) {
-          it(`${fileRel}:${lineNum} — variable '${v}' passed to '${tplName}' but never used in template`, () => {
+          it(`${fileRel}:${lineNum} - variable '${v}' passed to '${tplName}' but never used in template`, () => {
             assert.ok(false, `render variable '${v}' is passed to '${tplRel}' from ${fileRel}:${lineNum} but never referenced in the template or its partials`);
           });
         }
