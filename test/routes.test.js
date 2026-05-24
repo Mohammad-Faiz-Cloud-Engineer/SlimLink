@@ -71,21 +71,30 @@ describe('Routes: Landing page', () => {
 
   it('POST / with valid URL creates short link and shows result', async () => {
     const res = await req('POST', '/', { form: true, body: { url: 'https://example.com' } });
-    assert.strictEqual(res.status, 200);
-    assert.ok(res.body.includes('shortUrl'), 'response should include short URL input');
-    assert.ok(res.body.includes('test.local'), 'short URL should include base URL');
+    assert.strictEqual(res.status, 302);
+    assert.ok(res.headers.location.startsWith('/?code='), 'should redirect with code');
+    const follow = await req('GET', res.headers.location);
+    assert.strictEqual(follow.status, 200);
+    assert.ok(follow.body.includes('shortUrl'), 'response should include short URL input');
+    assert.ok(follow.body.includes('test.local'), 'short URL should include base URL');
   });
 
   it('POST / with missing URL shows error', async () => {
     const res = await req('POST', '/', { form: true, body: {} });
-    assert.strictEqual(res.status, 200);
-    assert.ok(res.body.includes('error-msg'), 'response should show error message');
+    assert.strictEqual(res.status, 302);
+    assert.ok(res.headers.location.startsWith('/?error='), 'should redirect with error');
+    const follow = await req('GET', res.headers.location);
+    assert.strictEqual(follow.status, 200);
+    assert.ok(follow.body.includes('error-msg'), 'response should show error message');
   });
 
   it('POST / with invalid URL shows error', async () => {
     const res = await req('POST', '/', { form: true, body: { url: 'not-a-url' } });
-    assert.strictEqual(res.status, 200);
-    assert.ok(res.body.includes('error-msg'), 'response should show error for invalid URL');
+    assert.strictEqual(res.status, 302);
+    assert.ok(res.headers.location.startsWith('/?error='), 'should redirect with error');
+    const follow = await req('GET', res.headers.location);
+    assert.strictEqual(follow.status, 200);
+    assert.ok(follow.body.includes('error-msg'), 'response should show error for invalid URL');
   });
 });
 

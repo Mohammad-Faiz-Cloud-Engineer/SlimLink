@@ -7,37 +7,29 @@ const config = require('../config');
 const router = Router();
 
 router.get('/', (req, res) => {
+  let shortUrl = null;
+  if (req.query.code) {
+    const link = db.findLinkByCode(req.query.code);
+    if (link) shortUrl = config.baseUrl + '/' + link.short_code;
+  }
   res.render('index', {
     title: 'SlimLink',
-    shortUrl: null,
-    error: null
+    shortUrl,
+    error: req.query.error || null
   });
 });
 
 router.post('/', validateUrlForm, (req, res) => {
   if (req.urlError) {
-    return res.render('index', {
-      title: 'SlimLink',
-      shortUrl: null,
-      error: req.urlError
-    });
+    return res.redirect('/?error=' + encodeURIComponent(req.urlError));
   }
 
   try {
     const shortCode = generateShortCode();
     db.createLink(shortCode, req.validatedUrl);
-    const shortUrl = config.baseUrl + '/' + shortCode;
-    res.render('index', {
-      title: 'SlimLink',
-      shortUrl,
-      error: null
-    });
+    res.redirect('/?code=' + shortCode);
   } catch (err) {
-    res.render('index', {
-      title: 'SlimLink',
-      shortUrl: null,
-      error: err.message
-    });
+    res.redirect('/?error=' + encodeURIComponent(err.message));
   }
 });
 
