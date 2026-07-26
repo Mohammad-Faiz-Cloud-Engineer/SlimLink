@@ -117,7 +117,8 @@ describe('Build / Load verification', () => {
     }
     walk(srcDir);
     const indirectLoaders = {
-      'ejs': /view engine.*ejs|ejs.*view engine/
+      'ejs': /view engine.*ejs|ejs.*view engine/,
+      'nanoid': /import\(['"`]nanoid['"`]\)/
     };
     for (const dep of deps) {
       if (indirectLoaders[dep]) {

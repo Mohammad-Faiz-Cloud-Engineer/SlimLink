@@ -19,13 +19,13 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/', validateUrlForm, (req, res) => {
+router.post('/', validateUrlForm, async (req, res) => {
   if (req.urlError) {
     return res.redirect('/?error=' + encodeURIComponent(req.urlError));
   }
 
   try {
-    const shortCode = generateShortCode();
+    const shortCode = await generateShortCode();
     db.createLink(shortCode, req.validatedUrl);
     res.redirect('/?code=' + shortCode);
   } catch (err) {

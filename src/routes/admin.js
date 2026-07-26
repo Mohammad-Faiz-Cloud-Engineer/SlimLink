@@ -33,7 +33,7 @@ router.get('/links', (req, res) => {
   });
 });
 
-router.post('/links', validateUrlForm, (req, res) => {
+router.post('/links', validateUrlForm, async (req, res) => {
   if (req.urlError) {
     const links = db.getAllLinks();
     return res.status(400).render('admin/links', {
@@ -46,7 +46,7 @@ router.post('/links', validateUrlForm, (req, res) => {
   }
 
   try {
-    const shortCode = generateShortCode();
+    const shortCode = await generateShortCode();
     db.createLink(shortCode, req.validatedUrl);
     const links = db.getAllLinks();
     res.render('admin/links', {

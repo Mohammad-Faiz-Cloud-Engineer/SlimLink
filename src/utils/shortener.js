@@ -1,9 +1,10 @@
-const { nanoid } = require('nanoid');
 const db = require('../db/queries');
 
 const CODE_LENGTH = 7;
+const nanoidPromise = import('nanoid').then(m => m.nanoid);
 
-function generateShortCode() {
+async function generateShortCode() {
+  const nanoid = await nanoidPromise;
   for (let attempts = 0; attempts < 10; attempts++) {
     const code = nanoid(CODE_LENGTH);
     if (!db.findLinkByCode(code)) {

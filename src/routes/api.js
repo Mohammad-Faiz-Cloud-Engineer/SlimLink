@@ -6,9 +6,9 @@ const config = require('../config');
 
 const router = Router();
 
-router.post('/shorten', validateUrl, (req, res) => {
+router.post('/shorten', validateUrl, async (req, res) => {
   try {
-    const shortCode = generateShortCode();
+    const shortCode = await generateShortCode();
     db.createLink(shortCode, req.validatedUrl);
 
     res.status(201).json({

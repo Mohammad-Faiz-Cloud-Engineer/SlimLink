@@ -16,7 +16,7 @@ describe('Utils: shortener', () => {
     try { fs.unlinkSync(process.env.DB_PATH); } catch (e) { }
     await initDb();
     const { generateShortCode } = require('../src/utils/shortener');
-    const code = generateShortCode();
+    const code = await generateShortCode();
     assert.ok(typeof code === 'string', 'code should be a string');
     assert.strictEqual(code.length, 7, 'code should be 7 chars');
     assert.ok(/^[A-Za-z0-9_-]+$/.test(code), 'code uses only URL-safe chars');
@@ -26,7 +26,7 @@ describe('Utils: shortener', () => {
     const shortener = require('../src/utils/shortener');
     const codes = new Set();
     for (let i = 0; i < 50; i++) {
-      const code = shortener.generateShortCode();
+      const code = await shortener.generateShortCode();
       assert.ok(!codes.has(code), 'duplicate short code generated');
       codes.add(code);
     }
