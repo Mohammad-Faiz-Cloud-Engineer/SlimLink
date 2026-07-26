@@ -42,6 +42,7 @@ function isPrivateIP(ip) {
 }
 
 function lookupISP(ip) {
+  if (isPrivateIP(ip)) return Promise.resolve(null);
   return new Promise(function(resolve) {
     let url = 'https://ip-api.com/json/' + encodeURIComponent(ip) + '?fields=isp,org,as';
     https.get(url, function(res) {

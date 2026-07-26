@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 function cleanTestDb() {
-  const dbPath = path.resolve(__dirname, '..', process.env.DB_PATH);
+  const dbPath = path.resolve(process.env.DB_PATH);
   try { fs.unlinkSync(dbPath); } catch (e) { }
 }
 

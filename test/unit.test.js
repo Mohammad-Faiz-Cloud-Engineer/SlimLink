@@ -12,8 +12,8 @@ before(() => {
 describe('Utils: shortener', () => {
   it('generateShortCode returns a 7-character string', async () => {
     const { initDb } = require('../src/db/index');
-    const helper = require('./lib/helper.cjs');
-    helper.cleanTestDb();
+    const fs = require('fs');
+    try { fs.unlinkSync(process.env.DB_PATH); } catch (e) { }
     await initDb();
     const { generateShortCode } = require('../src/utils/shortener');
     const code = generateShortCode();

@@ -56,10 +56,11 @@ describe('Code quality checks', () => {
       const full = path.resolve(__dirname, '..', rel);
       const content = fs.readFileSync(full, 'utf8');
       const lines = content.split('\n');
+      const whitelistIndex = rel === 'src/index.js';
       for (let i = 0; i < lines.length; i++) {
-        if (lines[i].includes('console.error')) {
-          const match = lines[i].match(/console\.(log|dir|table)\s*\(/);
-          if (match) {
+        const match = lines[i].match(/console\.(log|dir|table)\s*\(/);
+        if (match) {
+          if (!whitelistIndex) {
             assert.fail(`${rel}:${i + 1} uses console.${match[1]} instead of console.error`);
           }
         }

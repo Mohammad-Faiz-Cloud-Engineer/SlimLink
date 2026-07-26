@@ -5,6 +5,7 @@ const http = require('http');
 let server = null;
 let baseUrl = '';
 let authHeader = '';
+let apiShortCode = '';
 
 function req(method, path, opts = {}) {
   const url = baseUrl + path;
@@ -103,8 +104,9 @@ describe('Routes: API', () => {
     const res = await req('POST', '/api/shorten', { json: true, body: { url: 'https://api-test.com' } });
     assert.strictEqual(res.status, 201);
     const data = res.json();
+    apiShortCode = data.short_code;
     assert.ok(data.short_url, 'response should include short_url');
-    assert.ok(data.short_code, 'response should include short_code');
+    assert.ok(apiShortCode, 'response should include short_code');
     assert.strictEqual(data.original_url, 'https://api-test.com');
   });
 
@@ -261,13 +263,19 @@ describe('Routes: Security headers', () => {
 
 describe('Routes: Click tracking', () => {
   it('click counter increments when link is visited', async () => {
-    const detailBefore = await req('GET', '/admin/links/2', { auth: true });
-    const clicksMatch = detailBefore.body.match(/<strong>(\d+)<\/strong>/);
-    const clicksBefore = clicksMatch ? parseInt(clicksMatch[1]) : 0;
+    assert.ok(apiShortCode, 'API test must have created a short code');
 
-    await req('GET', '/api-test-short-xyz', { auth: false });
+    const detailBefore = await req('GET', '/admin/links/2', { auth: true });
+    const clicksBeforeMatch = detailBefore.body.match(/<strong>(\d+)<\/strong>/);
+    const clicksBefore = clicksBeforeMatch ? parseInt(clicksBeforeMatch[1]) : 0;
+
+    const redirectRes = await req('GET', '/' + apiShortCode);
+    assert.strictEqual(redirectRes.status, 301);
 
     const detailAfter = await req('GET', '/admin/links/2', { auth: true });
-    assert.ok(detailAfter.body.includes('Click Log'), 'detail page should show click log');
+    const clicksAfterMatch = detailAfter.body.match(/<strong>(\d+)<\/strong>/);
+    const clicksAfter = clicksAfterMatch ? parseInt(clicksAfterMatch[1]) : 0;
+
+    assert.strictEqual(clicksAfter, clicksBefore + 1, 'click count should increment by 1');
   });
 });
