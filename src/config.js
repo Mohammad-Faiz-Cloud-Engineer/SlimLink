@@ -20,6 +20,10 @@ const config = {
     redirect: {
       windowMs: parseInt(process.env.RATE_LIMIT_REDIRECT_WINDOW_MS, 10) || 60000,
       max: parseInt(process.env.RATE_LIMIT_REDIRECT_MAX, 10) || 1000
+    },
+    admin: {
+      windowMs: parseInt(process.env.RATE_LIMIT_ADMIN_WINDOW_MS, 10) || 900000,
+      max: parseInt(process.env.RATE_LIMIT_ADMIN_MAX, 10) || 20
     }
   },
   db: {

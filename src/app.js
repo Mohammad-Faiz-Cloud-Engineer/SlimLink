@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
-const { apiLimiter, redirectLimiter } = require('./middleware/rateLimit');
+const { apiLimiter, redirectLimiter, adminLimiter } = require('./middleware/rateLimit');
 
 const landingRoutes = require('./routes/landing');
 const redirectRoutes = require('./routes/redirect');
@@ -30,7 +30,18 @@ app.locals.fmtDate = function fmtDate(d) {
 app.set('trust proxy', 1);
 
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"]
+    }
+  },
   crossOriginEmbedderPolicy: false
 }));
 
@@ -39,7 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api', apiLimiter, apiRoutes);
-app.use('/admin', adminRoutes);
+app.use('/admin', adminLimiter, adminRoutes);
 app.use('/', landingRoutes);
 app.use('/', redirectLimiter, redirectRoutes);
 

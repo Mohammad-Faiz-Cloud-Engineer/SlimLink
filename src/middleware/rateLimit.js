@@ -17,4 +17,12 @@ const redirectLimiter = rateLimit({
   message: 'Too many requests. Please try again later.'
 });
 
-module.exports = { apiLimiter, redirectLimiter };
+const adminLimiter = rateLimit({
+  windowMs: config.rateLimit.admin.windowMs,
+  max: config.rateLimit.admin.max,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests. Please try again later.'
+});
+
+module.exports = { apiLimiter, redirectLimiter, adminLimiter };
